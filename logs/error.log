@@ -1,0 +1,5 @@
+time=2024-09-30T16:52:36.720-04:00 level=ERROR msg="Failed to load .env file"
+time=2024-09-30T16:53:05.025-04:00 level=ERROR msg="Fail to load .env file"
+time=2024-09-30T18:58:27.917-04:00 level=ERROR msg="Fail to load .env file"
+time=2024-09-30T19:10:49.691-04:00 level=ERROR msg="Fail to load .env file"
+time=2024-09-30T19:31:41.337-04:00 level=ERROR msg="Error in connecting database"
