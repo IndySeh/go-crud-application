@@ -15,3 +15,7 @@ type PostResponse struct {
 	Message string `json:"message"`
 	User    *User  `json:"user,omitempty"`
 }
+
+
+
+

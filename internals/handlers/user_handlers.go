@@ -8,6 +8,7 @@ import (
 
 	"github.com/IndySeh/go-crud-application/internals/db"
 	"github.com/IndySeh/go-crud-application/internals/repository"
+	"github.com/IndySeh/go-crud-application/internals/utils"
 	"github.com/IndySeh/go-crud-application/pkg/logging"
 	"github.com/IndySeh/go-crud-application/pkg/types"
 	"github.com/gorilla/mux"
@@ -16,8 +17,8 @@ import (
 func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 	db, err := db.Connect()
 	if err != nil {
-		log.Println("Error connecting Database", err)
-		http.Error(w, "Database Error", http.StatusInternalServerError)
+		log.Println("Error is connecting database", err)
+		utils.WriteError(w, "database connection error", http.StatusInternalServerError)
 		logging.ErrorLogger.Error("Error in connecting database")
 		return
 	}
@@ -28,9 +29,10 @@ func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Fatal("Error fetching users")
-		http.Error(w, "error fetching users from database", http.StatusInternalServerError)
+		utils.WriteError(w, "error in  fetching user", http.StatusInternalServerError)
 		return
 	}
+
 	w.Header().Set("Content", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(users)
@@ -51,14 +53,14 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	userId, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, `{"error": "string conversion error"}`, http.StatusInternalServerError)
+		http.Error(w, "string conversion error", http.StatusInternalServerError)
 		return
 	}
 
 	user, err := repository.FetchUserFromDB(db, userId)
 	if err != nil {
-		http.Error(w, `{"error": "user not found"}`, http.StatusNotFound)
-		return
+		http.Error(w, "user not found", http.StatusNotFound)
+		w.Header().Set("Content-Type", "application/json")
 	}
 
 	w.Header().Set("Content-Type", "application/json")

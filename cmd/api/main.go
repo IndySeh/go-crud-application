@@ -3,6 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
+
+	"github.com/IndySeh/go-crud-application/internals/db"
 	"github.com/IndySeh/go-crud-application/internals/handlers"
 	"github.com/IndySeh/go-crud-application/pkg/logging"
 	_ "github.com/go-sql-driver/mysql"
@@ -25,15 +28,30 @@ func main() {
 		log.Fatal("Error in loading .env file. Please check logs: /logs/error.log")
 	}
 
-	router := mux.NewRouter() 
+	router := mux.NewRouter()
 
 	router.HandleFunc("/api/users", handlers.GetAllUsersHandler).Methods("GET")
 	router.HandleFunc("/api/users/{id}", handlers.GetUserHandler).Methods("GET")
 	router.HandleFunc("/api/users", handlers.AddUserHandler).Methods("POST")
-
+	router.HandleFunc("/api/users", UpdateUserHandler).Methods("PATCH")
 	router.HandleFunc("/api/users/{id}", handlers.DeleteUserHandler).Methods("DELETE")
 
 	logging.InfoLogger.Info("Running on Port: 8090")
 	log.Println("Server is running on Port:8090")
 	log.Fatal(http.ListenAndServe(":8090", router))
+}
+
+func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
+	db, err := db.Connect()
+	if err != nil {
+		log.Println("Error in connection database", err)
+		http.Error(w, "Database connection error", http.StatusInternalServerError)
+		logging.ErrorLogger.Error("Error in Connection database")
+		return
+	}
+
+	defer db.Close()
+
+	// UserId, err := strconv.Atoi(idStr)
+
 }

@@ -1,9 +1,10 @@
 package db
 
 import (
-	"errors"
 	"database/sql"
+	"errors"
 	"os"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -13,7 +14,6 @@ func Connect() (*sql.DB, error) {
 	dbPass := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
 
-	// missing database connection error
 	if dbDriver == "" || dbUser == "" || dbPass == "" || dbName == "" {
 		return nil, errors.New("database connection parameters are missing")
 	}
