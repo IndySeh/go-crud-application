@@ -104,3 +104,7 @@ func UpdateUserInDB(db *sql.DB, user *types.User) error {
 	return nil
 }
 
+// TODO Check User before going ahead with request.
+func UserExist()  {
+	
+}
