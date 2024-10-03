@@ -12,3 +12,5 @@ time=2024-10-02T14:20:29.789-04:00 level=ERROR msg="Error in connecting database
 time=2024-10-02T15:17:43.193-04:00 level=ERROR msg="Error in connecting database"
 time=2024-10-02T15:52:42.391-04:00 level=ERROR msg="Error in connecting database"
 time=2024-10-02T22:07:54.515-04:00 level=ERROR msg="error connecting database"
+time=2024-10-02T22:49:57.928-04:00 level=ERROR msg="user not found"
+time=2024-10-02T22:52:09.869-04:00 level=ERROR msg="user not found"

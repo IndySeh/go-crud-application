@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 	"os"
-
 	_ "github.com/go-sql-driver/mysql"
 )
 

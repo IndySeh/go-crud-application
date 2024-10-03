@@ -10,3 +10,13 @@ time=2024-10-02T21:50:06.397-04:00 level=INFO msg="Executing query" query="Selec
 time=2024-10-02T21:50:06.413-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=15.529791ms
 time=2024-10-02T22:07:29.579-04:00 level=INFO msg="Executing query" query="Select * from users"
 time=2024-10-02T22:07:29.580-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=409.166µs
+time=2024-10-02T22:50:01.207-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T22:50:01.208-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=381.292µs
+time=2024-10-02T22:52:12.018-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T22:52:12.019-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=427.917µs
+time=2024-10-02T23:14:50.061-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T23:14:50.062-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=369.041µs
+time=2024-10-02T23:15:16.514-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T23:15:16.515-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=304.167µs
+time=2024-10-02T23:16:12.805-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T23:16:12.806-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=542.917µs

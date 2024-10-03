@@ -3,11 +3,10 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-	"log/slog"
-	"time"
-
 	"github.com/IndySeh/go-crud-application/pkg/logging"
 	"github.com/IndySeh/go-crud-application/pkg/types"
+	"log/slog"
+	"time"
 )
 
 func FetchUsersFromDB(db *sql.DB) ([]*types.User, error) {
@@ -95,3 +94,13 @@ func InsertUserInDB(db *sql.DB, name, email string) error {
 	}
 	return nil
 }
+
+func UpdateUserInDB(db *sql.DB, user *types.User) error {
+	query := `UPDATE users SET name = ?, email = ? WHERE id = ?`
+	_, err := db.Exec(query, user.Name, user.Email, user.Id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+

@@ -120,3 +120,27 @@ func AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(response)
 }
+
+func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
+	user := &types.User{}
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		utils.HandleError(w, err, "invalid input", http.StatusInternalServerError)
+	}
+	
+	db, err := db.Connect()
+	if err != nil {
+		utils.HandleError(w, err, "error connecting database", http.StatusInternalServerError)
+		return
+	}
+
+	defer db.Close()
+
+	if err := repository.UpdateUserInDB(db, user); err != nil {
+		utils.HandleError(w, err, "error in updating user", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode("user updated successfully")
+}
