@@ -6,3 +6,7 @@ time=2024-09-30T19:29:20.010-04:00 level=INFO msg="Executing query" query="Selec
 time=2024-09-30T19:29:33.048-04:00 level=INFO msg="Executing query" query="Select * from users"
 time=2024-10-02T14:21:02.857-04:00 level=INFO msg="Executing query" query="Select * from users"
 time=2024-10-02T14:21:02.863-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=5.616458ms
+time=2024-10-02T21:50:06.397-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T21:50:06.413-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=15.529791ms
+time=2024-10-02T22:07:29.579-04:00 level=INFO msg="Executing query" query="Select * from users"
+time=2024-10-02T22:07:29.580-04:00 level=INFO msg="Query Executed" query="Select * from users" duration=409.166µs

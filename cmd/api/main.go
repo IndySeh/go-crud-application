@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/IndySeh/go-crud-application/internals/db"
 	"github.com/IndySeh/go-crud-application/internals/handlers"

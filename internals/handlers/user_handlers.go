@@ -2,14 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
-
 	"github.com/IndySeh/go-crud-application/internals/db"
 	"github.com/IndySeh/go-crud-application/internals/repository"
 	"github.com/IndySeh/go-crud-application/internals/utils"
-	"github.com/IndySeh/go-crud-application/pkg/logging"
 	"github.com/IndySeh/go-crud-application/pkg/types"
 	"github.com/gorilla/mux"
 )
@@ -17,9 +14,7 @@ import (
 func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 	db, err := db.Connect()
 	if err != nil {
-		log.Println("Error is connecting database", err)
-		utils.WriteError(w, "database connection error", http.StatusInternalServerError)
-		logging.ErrorLogger.Error("Error in connecting database")
+		utils.HandleError(w, err, "error connecting database", http.StatusInternalServerError)
 		return
 	}
 
@@ -28,8 +23,7 @@ func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 	users, err := repository.FetchUsersFromDB(db)
 
 	if err != nil {
-		log.Fatal("Error fetching users")
-		utils.WriteError(w, "error in  fetching user", http.StatusInternalServerError)
+		utils.HandleError(w, err, "error in fetching user from database", http.StatusInternalServerError)
 		return
 	}
 
@@ -42,8 +36,8 @@ func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	db, err := db.Connect()
 	if err != nil {
-		log.Println("Error connecting Database", err)
-		http.Error(w, "Database connection error", http.StatusInternalServerError)
+		utils.HandleError(w, err, "error connecting database", http.StatusInternalServerError)
+		return
 	}
 
 	defer db.Close()
@@ -53,14 +47,14 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	userId, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, "string conversion error", http.StatusInternalServerError)
+		utils.HandleError(w, err, "string conversion error", http.StatusInternalServerError)
 		return
 	}
 
 	user, err := repository.FetchUserFromDB(db, userId)
 	if err != nil {
-		http.Error(w, "user not found", http.StatusNotFound)
-		w.Header().Set("Content-Type", "application/json")
+		utils.HandleError(w, err, "user not found", http.StatusNotFound)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -71,8 +65,7 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	db, err := db.Connect()
 	if err != nil {
-		log.Println("error connecting database", err)
-		http.Error(w, "database error", http.StatusInternalServerError)
+		utils.HandleError(w, err, "error connecting database", http.StatusInternalServerError)
 	}
 
 	defer db.Close()
@@ -82,14 +75,14 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	userID, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, `{"error": "string conversion error"}`, http.StatusInternalServerError)
+		utils.HandleError(w, err, "string conversion error", http.StatusInternalServerError)
 		return
 	}
 
 	err = repository.DeleteUserFromDB(db, userID)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		utils.HandleError(w, err, "error in deleting user from database", http.StatusInternalServerError)
 		return
 	}
 
@@ -101,8 +94,7 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 func AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	db, err := db.Connect()
 	if err != nil {
-		log.Println("error connecting database", err)
-		http.Error(w, "database error", http.StatusInternalServerError)
+		utils.HandleError(w, err, "error connecting database", http.StatusInternalServerError)
 		return
 	}
 
@@ -110,14 +102,13 @@ func AddUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := &types.User{}
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		utils.HandleError(w, err, "invalid request body", http.StatusBadRequest)
 		return
 	}
 
 	err = repository.InsertUserInDB(db, user.Name, user.Email)
 	if err != nil {
-		log.Println("Error in inserting record: ", err)
-		http.Error(w, `{"error":"error in inserting user"}`, http.StatusInternalServerError)
+		utils.HandleError(w, err, "error in inserting user", http.StatusInternalServerError)
 		return
 	}
 
