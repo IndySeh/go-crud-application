@@ -1,13 +1,15 @@
 package main
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/IndySeh/go-crud-application/internals/handlers"
+	"github.com/IndySeh/go-crud-application/internals/middleware"
 	"github.com/IndySeh/go-crud-application/pkg/logging"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
-	"log"
-	"net/http"
 )
 
 func main() {
@@ -27,7 +29,7 @@ func main() {
 
 	mux := mux.NewRouter()
 
-	mux.Use(LogIncomingRequestMiddleWare)
+	mux.Use(middleware.LogIncomingRequestMiddleWare)
 	
 	mux.HandleFunc("/api/users", handlers.GetAllUsersHandler).Methods("GET")
 	mux.HandleFunc("/api/users/{id}", handlers.GetUserHandler).Methods("GET")
@@ -38,12 +40,4 @@ func main() {
 	logging.InfoLogger.Info("Running on Port: 8090")
 	log.Println("Server is running on Port:8090")
 	log.Fatal(http.ListenAndServe(":8090", mux))
-}
-
-func LogIncomingRequestMiddleWare(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("Request Method: %s, Request URL: %s", r.Method, r.URL)
-		logging.RequestLogger.Info("Request Method: " + r.Method + " Requested URL: " + r.URL.Path)
-		next.ServeHTTP(w, r)
-	})
 }
