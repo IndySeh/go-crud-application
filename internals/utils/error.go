@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-
 	"github.com/IndySeh/go-crud-application/pkg/logging"
 )
 
@@ -20,6 +19,6 @@ func WriteError(w http.ResponseWriter, message string, statusCode int) {
 
 func HandleError(w http.ResponseWriter, err error, message string, statusCode int) {
 	log.Println(message, err)
-	WriteError(w, message, statusCode)
+	WriteError(w, err.Error(), statusCode)
 	logging.ErrorLogger.Error(message)
 }

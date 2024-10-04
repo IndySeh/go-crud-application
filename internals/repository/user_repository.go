@@ -61,12 +61,9 @@ func FetchUserFromDB(db *sql.DB, id int) (*types.User, error) {
 }
 
 func DeleteUserFromDB(db *sql.DB, Id int) error {
-	user := &types.User{}
 
-	findUser := `SELECT * FROM users where id = ?`
-	err := db.QueryRow(findUser, Id).Scan(&user.Id, &user.Name, &user.Email)
-	if err != nil {
-		return fmt.Errorf("user not found %v", err)
+	if err := UserExist(db, Id); err != nil {
+		return fmt.Errorf("user not found: %v", err)
 	}
 
 	deleteUser := `DELETE FROM users WHERE id = ?`
@@ -87,6 +84,7 @@ func DeleteUserFromDB(db *sql.DB, Id int) error {
 }
 
 func InsertUserInDB(db *sql.DB, name, email string) error {
+
 	query := `INSERT INTO users (name, email) VALUES (?,?)`
 	_, err := db.Exec(query, name, email)
 	if err != nil {
@@ -96,6 +94,11 @@ func InsertUserInDB(db *sql.DB, name, email string) error {
 }
 
 func UpdateUserInDB(db *sql.DB, user *types.User) error {
+
+	if err := UserExist(db, user.Id); err != nil {
+		return fmt.Errorf("user not found: %v", err)
+	}
+
 	query := `UPDATE users SET name = ?, email = ? WHERE id = ?`
 	_, err := db.Exec(query, user.Name, user.Email, user.Id)
 	if err != nil {
@@ -104,7 +107,11 @@ func UpdateUserInDB(db *sql.DB, user *types.User) error {
 	return nil
 }
 
-// TODO Check User before going ahead with request.
-func UserExist()  {
-	
+func UserExist(db *sql.DB, Id int) error {
+	user := &types.User{}
+	query := `SELECT * FROM users WHERE Id  = ?`
+	if err := db.QueryRow(query, Id).Scan(&user.Id, &user.Email, &user.Name); err != nil {
+		return fmt.Errorf("user not found")
+	}
+	return nil
 }
