@@ -96,7 +96,7 @@ func InsertUserInDB(db *sql.DB, name, email string) error {
 func UpdateUserInDB(db *sql.DB, user *types.User) error {
 
 	if err := UserExist(db, user.Id); err != nil {
-		return fmt.Errorf("user not found: %v", err)
+		return fmt.Errorf("error: %v", err)
 	}
 
 	query := `UPDATE users SET name = ?, email = ? WHERE id = ?`

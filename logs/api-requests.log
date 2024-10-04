@@ -1,0 +1,3 @@
+time=2024-10-03T23:52:09.479-04:00 level=INFO msg="Request Method: %s, Request URL: %s" GET=/api/users/8
+time=2024-10-03T23:56:16.598-04:00 level=INFO msg="Request Method: " GET=" Requested URL" !BADKEY=/api/users/8
+time=2024-10-04T00:00:31.858-04:00 level=INFO msg="Request Method: GET Requested URL: /api/users/8"

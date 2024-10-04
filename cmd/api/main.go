@@ -1,13 +1,13 @@
 package main
 
 import (
-	"log"
-	"net/http"
 	"github.com/IndySeh/go-crud-application/internals/handlers"
 	"github.com/IndySeh/go-crud-application/pkg/logging"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -25,17 +25,25 @@ func main() {
 		log.Fatal("Error in loading .env file. Please check logs: /logs/error.log")
 	}
 
-	router := mux.NewRouter()
+	mux := mux.NewRouter()
 
-	router.HandleFunc("/api/users", handlers.GetAllUsersHandler).Methods("GET")
-	router.HandleFunc("/api/users/{id}", handlers.GetUserHandler).Methods("GET")
-	router.HandleFunc("/api/users", handlers.AddUserHandler).Methods("POST")
-	router.HandleFunc("/api/users", handlers.UpdateUserHandler).Methods("PUT")
-	router.HandleFunc("/api/users/{id}", handlers.DeleteUserHandler).Methods("DELETE")
+	mux.Use(LogIncomingRequestMiddleWare)
+	
+	mux.HandleFunc("/api/users", handlers.GetAllUsersHandler).Methods("GET")
+	mux.HandleFunc("/api/users/{id}", handlers.GetUserHandler).Methods("GET")
+	mux.HandleFunc("/api/users", handlers.AddUserHandler).Methods("POST")
+	mux.HandleFunc("/api/users", handlers.UpdateUserHandler).Methods("PUT")
+	mux.HandleFunc("/api/users/{id}", handlers.DeleteUserHandler).Methods("DELETE")
 
 	logging.InfoLogger.Info("Running on Port: 8090")
 	log.Println("Server is running on Port:8090")
-	log.Fatal(http.ListenAndServe(":8090", router))
+	log.Fatal(http.ListenAndServe(":8090", mux))
 }
 
-
+func LogIncomingRequestMiddleWare(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Request Method: %s, Request URL: %s", r.Method, r.URL)
+		logging.RequestLogger.Info("Request Method: " + r.Method + " Requested URL: " + r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
+}
