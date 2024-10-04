@@ -12,6 +12,12 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// TODO Authentication, CORS
+
+
+
+
+
 func main() {
 
 	logError := logging.InitLoggers()
@@ -41,3 +47,5 @@ func main() {
 	log.Println("Server is running on Port:8090")
 	log.Fatal(http.ListenAndServe(":8090", mux))
 }
+
+
