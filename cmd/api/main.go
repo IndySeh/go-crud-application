@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-
 	"github.com/IndySeh/go-crud-application/internals/handlers"
 	"github.com/IndySeh/go-crud-application/internals/middleware"
 	"github.com/IndySeh/go-crud-application/pkg/logging"
@@ -13,11 +12,6 @@ import (
 )
 
 // TODO Authentication, CORS
-
-
-
-
-
 func main() {
 
 	logError := logging.InitLoggers()

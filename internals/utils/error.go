@@ -12,8 +12,8 @@ type ErrorResponse struct {
 }
 
 func WriteError(w http.ResponseWriter, message string, statusCode int) {
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
+  w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(ErrorResponse{Error: message})
 }
 
@@ -22,3 +22,4 @@ func HandleError(w http.ResponseWriter, err error, message string, statusCode in
 	WriteError(w, err.Error(), statusCode)
 	logging.ErrorLogger.Error(message)
 }
+
