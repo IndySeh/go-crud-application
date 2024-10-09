@@ -11,9 +11,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// TODO Authentication, CORS
 func main() {
-
 	logError := logging.InitLoggers()
 	if logError != nil {
 		log.Fatalf("Failed to initialize loggers %v", logError)

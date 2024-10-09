@@ -13,22 +13,22 @@ var (
 )
 
 func InitLoggers() error {
-	requestFile, err := os.OpenFile("/go/src/logs/api-requests.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	requestFile, err := os.OpenFile("../../logs/api-requests.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil{
 		return err
 	}
 
-	infoFile, err := os.OpenFile("/go/src/logs/info.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	infoFile, err := os.OpenFile("../../logs/info.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		return err
 	}
 
-	errorFile, err := os.OpenFile("/go/src/logs/error.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	errorFile, err := os.OpenFile("../../logs/error.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		return err
 	}
 
-	dbFile, err := os.OpenFile("/go/src/logs/db.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	dbFile, err := os.OpenFile("../../logs/db.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		return err
 	}
