@@ -70,6 +70,7 @@ DB_NAME=crud_app
    ```
 
 4. **Run the application**:
+```bash
    Start the server using:
    ```bash
    go run cmd/api/main.go
