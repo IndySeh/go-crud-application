@@ -60,17 +60,18 @@ This is a basic Go application structured to demonstrate clean architecture prin
 
 3. **Set .env**:
    Create a .env file:  `cmd/api/.env`:
+   
    ```bash
    
-DB_DRIVER=mysql
-DB_USER=root
-DB_PASSWORD=root
-DB_NAME=crud_app
-
-   ```
+  DB_DRIVER=mysql
+  DB_USER=root
+  DB_PASSWORD=root
+  DB_NAME=crud_app
+    ```
 
 4. **Run the application**:
 ```bash
+
    Start the server using:
    ```bash
    go run cmd/api/main.go
@@ -79,19 +80,15 @@ DB_NAME=crud_app
    The API should be running at `http://localhost:8080`.
 
 5. **API Endpoints**:
-   - `GET /users`: Fetch all users.
-   - `POST /users`: Add a new user.
+   - `GET /api/users`: Fetch all users.
+   - `GET /api/users{id}`: Fetch users by id.
+   - `POST /api/users`: Add a new user.
+   - `DEL /api/users{id}`: Delete a user.
+   - `PUT /api/users`: Update a user
 
 6. **Logs**:
    Application logs (API requests, database queries, errors) are saved under the `logs/` directory.
 
-### Testing
-
-1. **Run tests**:
-   Unit tests are placed within their respective package folders. To run all tests:
-   ```bash
-   go test ./...
-   ```
 
 ### Project Structure Explanation
 
